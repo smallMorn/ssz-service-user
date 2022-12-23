@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/service-user-app/service-user-app.iml" filepath="$PROJECT_DIR$/service-user-app/service-user-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-user-client/service-user-client.iml" filepath="$PROJECT_DIR$/service-user-client/service-user-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-user-common/service-user-common.iml" filepath="$PROJECT_DIR$/service-user-common/service-user-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/ssz-service-user.iml" filepath="$PROJECT_DIR$/ssz-service-user.iml" />
     </modules>
   </component>
