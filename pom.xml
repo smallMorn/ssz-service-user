@@ -44,20 +44,7 @@
     </properties>
 
     <dependencies>
-        <!--nacos做注册中心-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--nacos做配置中心-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -162,8 +149,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!--seata end-->
         </dependencies>
     </dependencyManagement>
 
