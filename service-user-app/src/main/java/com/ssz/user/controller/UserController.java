@@ -1,7 +1,8 @@
 package com.ssz.user.controller;
 
-import com.ssz.client.dto.UserDTO;
-import com.ssz.client.dto.UserQueryDTO;
+import com.ssz.user.client.api.UserClient;
+import com.ssz.user.client.dto.UserDTO;
+import com.ssz.user.client.dto.UserQueryDTO;
 import com.ssz.common.web.result.ResultInfo;
 import com.ssz.user.cache.UserCache;
 import com.ssz.user.entity.User;
@@ -17,7 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController implements UserClient {
 
     private final IUserService userService;
 
@@ -29,7 +30,7 @@ public class UserController {
         return ResultInfo.success();
     }
 
-    @PostMapping("/list")
+    @PostMapping("/query/list")
     public ResultInfo list(@RequestBody UserQueryDTO queryDTO) {
         return ResultInfo.success(userService.list(queryDTO));
     }

@@ -1,4 +1,4 @@
-package com.ssz.client.dto;
+package com.ssz.user.client.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

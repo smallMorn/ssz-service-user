@@ -2,8 +2,8 @@ package com.ssz.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ssz.client.dto.UserDTO;
-import com.ssz.client.dto.UserQueryDTO;
+import com.ssz.user.client.dto.UserDTO;
+import com.ssz.user.client.dto.UserQueryDTO;
 import com.ssz.user.entity.User;
 
 /**

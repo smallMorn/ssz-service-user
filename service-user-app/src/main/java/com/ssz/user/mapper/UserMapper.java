@@ -2,7 +2,7 @@ package com.ssz.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ssz.client.dto.UserQueryDTO;
+import com.ssz.user.client.dto.UserQueryDTO;
 import com.ssz.user.entity.User;
 import org.apache.ibatis.annotations.Param;
 

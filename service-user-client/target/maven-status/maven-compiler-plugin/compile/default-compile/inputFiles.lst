@@ -1,0 +1,5 @@
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-client/src/main/java/com/ssz/user/client/dto/UserDTO.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-client/src/main/java/com/ssz/user/client/dto/UserQueryDTO.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-client/src/main/java/com/ssz/user/client/api/UserClient.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-client/src/main/java/com/ssz/user/client/fallback/UserClientFallback.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-client/src/main/java/com/ssz/user/client/config/UserClientConfig.java

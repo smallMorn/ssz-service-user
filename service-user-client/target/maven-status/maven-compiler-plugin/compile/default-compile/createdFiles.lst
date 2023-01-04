@@ -1,0 +1,6 @@
+com/ssz/user/client/dto/UserQueryDTO.class
+com/ssz/user/client/dto/UserDTO.class
+com/ssz/user/client/fallback/UserClientFallback$1.class
+com/ssz/user/client/fallback/UserClientFallback.class
+com/ssz/user/client/config/UserClientConfig.class
+com/ssz/user/client/api/UserClient.class
