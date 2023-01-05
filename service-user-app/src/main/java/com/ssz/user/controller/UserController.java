@@ -50,6 +50,7 @@ public class UserController implements UserClient {
 
     @GetMapping("/selectById/{id}")
     public ResultInfo selectById(@PathVariable Long id) {
+        System.out.println("111");
         return ResultInfo.success(userCache.selectById(id));
     }
 }
