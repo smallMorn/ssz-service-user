@@ -150,6 +150,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- rocketmq -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>4.8.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

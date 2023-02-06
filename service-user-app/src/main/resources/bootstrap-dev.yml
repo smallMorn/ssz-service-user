@@ -19,3 +19,5 @@ spring:
             refresh: true
           - data-id: ssz-mybatis-plus.yml
             refresh: true
+          - dataId: ssz-rocketmq.yml
+            refresh: true
