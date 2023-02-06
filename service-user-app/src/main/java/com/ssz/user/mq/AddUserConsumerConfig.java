@@ -30,8 +30,8 @@ public class AddUserConsumerConfig {
     private AddUserListenerProcessor addUserListenerProcessor;
 
     @PostConstruct
-    public void defaultConsumer() throws MQClientException {
-        log.info("rocketmq consumer defaultConsumer 正在创建---------------------------------------");
+    public void addUserConsumer() throws MQClientException {
+        log.info("rocketmq consumer addUserConsumer 正在创建---------------------------------------");
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ssz-user-insert-group");
         consumer.setNamesrvAddr(nameServerAddress);
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
@@ -44,7 +44,7 @@ public class AddUserConsumerConfig {
                     String topic = messageExt.getTopic();
                     String tags = messageExt.getTags();
                     String body = new String(messageExt.getBody());
-                    log.info("MQ消息topic:{}, tag:{}, 接收到的消息为:{}", topic, tags, body);
+                    log.info("addUserConsumer MQ监听到消息topic:{}, tag:{}, body:{}", topic, tags, body);
                     addUserListenerProcessor.insertUser(body);
                 }
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
@@ -52,7 +52,7 @@ public class AddUserConsumerConfig {
         });
 
         consumer.start();
-        log.info("rocketmq consumer defaultConsumer 创建成功 nameServerAddress:{}",nameServerAddress);
+        log.info("rocketmq consumer addUserConsumer 创建成功 nameServerAddress:{}",nameServerAddress);
     }
 
 }
