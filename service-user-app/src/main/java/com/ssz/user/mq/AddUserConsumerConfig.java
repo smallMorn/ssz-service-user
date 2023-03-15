@@ -10,11 +10,13 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
 
 @Data
@@ -29,7 +31,10 @@ public class AddUserConsumerConfig {
     @Autowired
     private AddUserListenerProcessor addUserListenerProcessor;
 
-    @PostConstruct
+    @Resource
+    private Environment environment;
+
+    @ConditionalOnProperty(prefix = "rocketmq.producer", name = "autoIsOnOff", havingValue = "autoOn")
     public void addUserConsumer() throws MQClientException {
         log.info("rocketmq consumer addUserConsumer 正在创建---------------------------------------");
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ssz-user-insert-group");
