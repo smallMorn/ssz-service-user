@@ -29,7 +29,7 @@ public class AddUserConsumerConfig {
     private String nameServerAddress;
 
     @Autowired
-    private AddUserListenerProcessor addUserListenerProcessor;
+    private AddUserMessageProcess addUserMessageProcess;
 
     @Resource
     private Environment environment;
@@ -50,7 +50,7 @@ public class AddUserConsumerConfig {
                     String tags = messageExt.getTags();
                     String body = new String(messageExt.getBody());
                     log.info("addUserConsumer MQ监听到消息topic:{}, tag:{}, body:{}", topic, tags, body);
-                    addUserListenerProcessor.insertUser(body);
+                    addUserMessageProcess.insertUser(body);
                 }
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }

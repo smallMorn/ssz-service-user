@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 @Service
 @Slf4j
-public class AddUserListenerProcessor {
+public class AddUserMessageProcess {
 
     @Resource
     private IUserService userService;
