@@ -16,6 +16,11 @@ public class UserClientFallback implements FallbackFactory<UserClient> {
             public ResultInfo list(UserQueryDTO queryDTO) {
                 return ResultInfo.fail("调用user服务的列表查询失败！");
             }
+
+            @Override
+            public ResultInfo selectById(Long userId) {
+                return ResultInfo.fail("调用user服务的单个用户查询失败！");
+            }
         };
     }
 }
