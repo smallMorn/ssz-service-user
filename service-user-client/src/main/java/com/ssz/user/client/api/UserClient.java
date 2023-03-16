@@ -13,5 +13,5 @@ public interface UserClient {
     ResultInfo list(@RequestBody UserQueryDTO queryDTO);
 
     @GetMapping(value = "/selectById/{userId}")
-    ResultInfo selectById(@PathVariable Long userId);
+    ResultInfo selectById(@PathVariable(value = "userId") Long userId);
 }
