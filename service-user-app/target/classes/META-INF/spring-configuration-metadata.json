@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "rocketmq.producer",
+      "type": "com.ssz.user.mq.AddUserConsumerConfig",
+      "sourceType": "com.ssz.user.mq.AddUserConsumerConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "rocketmq.producer.add-user-message-process",
+      "type": "com.ssz.user.mq.AddUserMessageProcess",
+      "sourceType": "com.ssz.user.mq.AddUserConsumerConfig"
+    },
+    {
+      "name": "rocketmq.producer.environment",
+      "type": "org.springframework.core.env.Environment",
+      "sourceType": "com.ssz.user.mq.AddUserConsumerConfig"
+    },
+    {
+      "name": "rocketmq.producer.name-server-address",
+      "type": "java.lang.String",
+      "sourceType": "com.ssz.user.mq.AddUserConsumerConfig"
+    }
+  ],
+  "hints": []
+}

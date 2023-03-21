@@ -1,0 +1,11 @@
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/mq/RocketMqConsumerConfig.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/entity/User.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/service/impl/UserServiceImpl.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/service/IUserService.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/mq/ConsumeMsgListenerProcessor.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/MysqlGenerator.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/cache/UserCacheImpl.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/mapper/UserMapper.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/cache/UserCache.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/controller/UserController.java
+/Users/shangshenzhen/IdeaProjects/ssz-service-user/service-user-app/src/main/java/com/ssz/user/ServiceUserApplication.java

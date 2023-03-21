@@ -1,5 +1,7 @@
 package com.ssz.user.client.api;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ssz.user.client.dto.UserDTO;
 import com.ssz.user.client.dto.UserQueryDTO;
 import com.ssz.user.client.fallback.UserClientFallback;
 import com.ssz.common.web.result.ResultInfo;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 public interface UserClient {
 
     @PostMapping(value = "/query/list")
-    ResultInfo list(@RequestBody UserQueryDTO queryDTO);
+    ResultInfo<Page<UserDTO>> list(@RequestBody UserQueryDTO queryDTO);
 
     @GetMapping(value = "/selectById/{userId}")
-    ResultInfo selectById(@PathVariable(value = "userId") Long userId);
+    ResultInfo<UserDTO> selectById(@PathVariable(value = "userId") Long userId);
 }

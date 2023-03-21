@@ -1,5 +1,6 @@
 package com.ssz.user.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ssz.user.client.api.UserClient;
 import com.ssz.user.client.dto.UserDTO;
 import com.ssz.user.client.dto.UserQueryDTO;
@@ -31,7 +32,7 @@ public class UserController implements UserClient {
     }
 
     @PostMapping("/query/list")
-    public ResultInfo list(@RequestBody UserQueryDTO queryDTO) {
+    public ResultInfo<Page<UserDTO>> list(@RequestBody UserQueryDTO queryDTO) {
         return ResultInfo.success(userService.list(queryDTO));
     }
 

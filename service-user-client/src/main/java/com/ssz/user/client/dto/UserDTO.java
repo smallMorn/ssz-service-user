@@ -4,11 +4,11 @@ package com.ssz.user.client.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
 @Data
 @Accessors(chain = true)
-public class UserDTO implements Serializable {
+public class UserDTO {
+
+    private Long id;
 
     private String userName;
 
