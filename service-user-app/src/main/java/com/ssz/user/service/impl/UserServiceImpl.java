@@ -2,14 +2,12 @@ package com.ssz.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ssz.common.web.util.BeanCopyUtil;
 import com.ssz.user.client.dto.UserDTO;
 import com.ssz.user.client.dto.UserQueryDTO;
 import com.ssz.user.entity.User;
 import com.ssz.user.mapper.UserMapper;
 import com.ssz.user.service.IUserService;
 import lombok.AllArgsConstructor;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
