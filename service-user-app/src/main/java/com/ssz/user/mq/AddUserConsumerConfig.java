@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +35,11 @@ public class AddUserConsumerConfig {
     @Resource
     private Environment environment;
 
-    @ConditionalOnProperty(prefix = "rocketmq.producer", name = "autoIsOnOff", havingValue = "autoOn")
+    @Bean
+    @ConditionalOnProperty(prefix = "rocketmq.producer", value = "autoIsOnOff", havingValue = "autoOn")
     public void addUserConsumer() throws MQClientException {
         log.info("rocketmq consumer addUserConsumer 正在创建---------------------------------------");
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ssz-user-insert-group");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name_5");
         consumer.setNamesrvAddr(nameServerAddress);
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
         consumer.subscribe("ssz-user-topic", "user");
