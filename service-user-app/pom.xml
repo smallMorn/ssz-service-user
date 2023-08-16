@@ -108,5 +108,12 @@
 <!--            <groupId>com.ssz</groupId>-->
 <!--            <artifactId>ssz-mul</artifactId>-->
 <!--        </dependency>-->
+
+        <!--binlog同步-->
+        <dependency>
+            <groupId>com.github.shyiko</groupId>
+            <artifactId>mysql-binlog-connector-java</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

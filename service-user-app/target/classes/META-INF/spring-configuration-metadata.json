@@ -1,12 +1,22 @@
 {
   "groups": [
     {
+      "name": "binlog",
+      "type": "com.ssz.user.binlog.config.BinLogDbPropertys",
+      "sourceType": "com.ssz.user.binlog.config.BinLogDbPropertys"
+    },
+    {
       "name": "rocketmq.producer",
       "type": "com.ssz.user.mq.AddUserConsumerConfig",
       "sourceType": "com.ssz.user.mq.AddUserConsumerConfig"
     }
   ],
   "properties": [
+    {
+      "name": "binlog.datasource-list",
+      "type": "java.util.List<com.ssz.user.binlog.config.BinLogDbProperty>",
+      "sourceType": "com.ssz.user.binlog.config.BinLogDbPropertys"
+    },
     {
       "name": "rocketmq.producer.add-user-message-process",
       "type": "com.ssz.user.mq.AddUserMessageProcess",
