@@ -42,7 +42,7 @@ public class BinLogUtil {
                 int position = rs.getInt("ORDINAL_POSITION");
                 String dataType = rs.getString("DATA_TYPE");
                 if (columnName != null && position >= 1) {
-                    map.put(columnName, new ColumnInfo(position - 1, columnName, dataType, schema, tableName, index));
+                    map.put(columnName, new ColumnInfo(position, columnName, dataType, schema, tableName, index));
                 }
             }
             ps.close();

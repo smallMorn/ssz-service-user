@@ -16,8 +16,9 @@ public class BinLogItem {
     private Long timestamp = null;
     private Long serverId = null;
     private Long positionId = null;
-    // 存储字段-之前的值之后的值
+    //存储字段-之前的值 key-表列的名称
     private Map<String, Serializable> before = null;
+    //存储字段-之后的值 key-表列的名称
     private Map<String, Serializable> after = null;
     // 存储字段--类型
     private Map<String, ColumnInfo> colums = null;
@@ -46,7 +47,7 @@ public class BinLogItem {
         columMap.entrySet().forEach(entry -> {
             String key = entry.getKey();
             ColumnInfo tableColum = entry.getValue();
-            beOrAf.put(key, row[tableColum.position]);
+            beOrAf.put(key, row[tableColum.position - 1]);
         });
 
         // 写操作放after，删操作放before
