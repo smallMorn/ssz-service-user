@@ -81,9 +81,8 @@ public class BinLogItem {
         columMap.entrySet().forEach(entry -> {
             String key = entry.getKey();
             ColumnInfo tableColum = entry.getValue();
-            be.put(key, mapEntry.getKey()[tableColum.position]);
-
-            af.put(key, mapEntry.getValue()[tableColum.position]);
+            be.put(key, mapEntry.getKey()[tableColum.position - 1]);
+            af.put(key, mapEntry.getValue()[tableColum.position - 1]);
         });
 
         item.before = be;
