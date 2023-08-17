@@ -3,15 +3,12 @@ package com.ssz.user.binlog.listener;
 import com.alibaba.fastjson.JSON;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
-import com.ssz.user.binlog.config.BinLogDbProperty;
 import com.ssz.user.binlog.handler.HandlerFactory;
 import com.ssz.user.binlog.module.BinLogItem;
 import com.ssz.user.binlog.module.ColumnInfo;
-import com.ssz.user.binlog.util.BinLogUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,54 +18,32 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
     /**
      * 这个监听的表结构
      */
-    private Map<String, Map<String, ColumnInfo>> schemaTable;
-
-    /**
-     * 这个监听的数据库信息
-     */
-    private BinLogDbProperty binLogDbProperty;
-
-    /**
-     * 这个监听监听的表
-     */
-    private List<String> tables;
-
-    protected String lock = "binlog:idempotent:%s";
-
+    private final Map<String, Map<String, ColumnInfo>> schemaTable;
 
     /**
      * 这个监听这个库tableId和table关系
      */
-    private Map<Long, String> tableIdMapping = new ConcurrentHashMap();
+    private final Map<Long, String> tableIdMapping = new ConcurrentHashMap();
 
-    public CommonEventListener(Map<String, Map<String, ColumnInfo>> schemaTable, BinLogDbProperty binLogDbProperty) {
+    public CommonEventListener(Map<String, Map<String, ColumnInfo>> schemaTable) {
         this.schemaTable = schemaTable;
-        this.binLogDbProperty = binLogDbProperty;
-        this.tables = BinLogUtil.getListByStr(binLogDbProperty.getTable());
     }
 
     @Override
     public void onEvent(Event event) {
-
         EventType eventType = event.getHeader().getEventType();
 
         if (eventType == EventType.TABLE_MAP) {
-
             TableMapEventData tableData = event.getData();
             String table = tableData.getTable();
             long tableId = tableData.getTableId();
-            if (!tables.contains(table)) {
-                return;
-            }
             tableIdMapping.put(tableId, table);
-            log.info("监听到binlog table信息：{}", JSON.toJSONString(event));
+            log.info("监听到binlog table信息：{}, tableIdMapping：{}", JSON.toJSONString(event), JSON.toJSONString(tableIdMapping));
         }
 
         // 只处理添加删除更新三种操作
         if (EventType.isWrite(eventType) || EventType.isUpdate(eventType) || EventType.isDelete(eventType)) {
-
             handle(event, eventType);
-
         }
 
     }
@@ -90,18 +65,16 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             if (!tableIdMapping.containsKey(tableId)) {
                 return;
             }
-
-            log.info("监听到binlog add信息：{}", JSON.toJSONString(event));
             String table = tableIdMapping.get(tableId);
+            log.info("监听到binlog table:{} add信息：{}", table, JSON.toJSONString(event));
             for (Serializable[] row : data.getRows()) {
                 BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, schemaTable.get(table), eventType, nextPosition);
 
                 try {
-                    log.info("处理binlog add信息：{}", JSON.toJSONString(item));
+                    log.info("处理binlog table:{} add信息：{}", table, JSON.toJSONString(item));
                     HandlerFactory.getInstance(table).insertHandle(item);
                 } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    log.error("处理binlog add信息失败：{}", JSON.toJSONString(item));
+                    log.error("处理binlog table:{} add信息失败：{}", table, JSON.toJSONString(item), e);
                 }
 
             }
@@ -112,22 +85,20 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
 
             EventHeaderV4 header = event.getHeader();
             long nextPosition = header.getNextPosition();
-
             if (!tableIdMapping.containsKey(tableId)) {
                 return;
             }
-
-            log.info("监听到binlog update信息：{}", JSON.toJSONString(event));
             String table = tableIdMapping.get(tableId);
+            log.info("监听到binlog table:{}, update信息：{}", table, JSON.toJSONString(event));
+
             for (Map.Entry<Serializable[], Serializable[]> row : data.getRows()) {
                 BinLogItem item = BinLogItem.itemFromUpdate(row, schemaTable.get(table), eventType, nextPosition);
 
                 try {
-                    log.info("处理binlog update信息：{}", JSON.toJSONString(item));
+                    log.info("处理binlog table:{},update信息：{}", table, JSON.toJSONString(item));
                     HandlerFactory.getInstance(table).updateHandle(item);
                 } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    log.error("处理binlog update信息失败：{}", JSON.toJSONString(item));
+                    log.error("处理binlog table:{},update信息失败：{}", table, JSON.toJSONString(item), e);
                 }
 
             }
@@ -143,17 +114,16 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             if (!tableIdMapping.containsKey(tableId)) {
                 return;
             }
-
-            log.info("监听到binlog delete信息：{}", JSON.toJSONString(event));
             String table = tableIdMapping.get(tableId);
+            log.info("监听到binlog table:{} delete信息：{}", table, JSON.toJSONString(event));
+
             for (Serializable[] row : data.getRows()) {
                 BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, schemaTable.get(table), eventType, nextPosition);
                 try {
-                    log.info("处理binlog delete信息：{}", JSON.toJSONString(item));
+                    log.info("处理binlog table:{} delete信息：{}", table, JSON.toJSONString(item));
                     HandlerFactory.getInstance(table).deleteHandle(item);
                 } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    log.error("处理binlog delete信息失败：{}", JSON.toJSONString(item));
+                    log.error("处理binlog table:{} delete信息失败：{}", table, JSON.toJSONString(item), e);
                 }
 
             }

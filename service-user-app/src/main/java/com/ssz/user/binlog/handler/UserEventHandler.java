@@ -13,7 +13,7 @@ public class UserEventHandler implements CommonEventHandler {
 
     @Override
     public void insertHandle(BinLogItem binLogItem) {
-
+        System.out.println("user add。。。。。。。。");
     }
 
     @Override
