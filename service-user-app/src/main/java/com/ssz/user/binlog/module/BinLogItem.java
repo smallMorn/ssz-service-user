@@ -13,7 +13,6 @@ public class BinLogItem {
     private String schema;
     private String table;
     private EventType eventType;
-    private Long timestamp = null;
     private Long serverId = null;
     private Long positionId = null;
     //存储字段-之前的值 key-表列的名称
