@@ -21,9 +21,9 @@ public class HandlerFactory {
 
     @PostConstruct
     public void init() {
-        Map<String, CommonEventHandler> commonEventListenerHandlerInitMap = applicationContext.getBeansOfType(CommonEventHandler.class);
-        if (null != commonEventListenerHandlerInitMap) {
-            commonEventListenerHandlerInitMap.values().forEach(commonEventHandler -> {
+        Map<String, CommonEventHandler> commonEventHandlerInitMap = applicationContext.getBeansOfType(CommonEventHandler.class);
+        if (null != commonEventHandlerInitMap) {
+            commonEventHandlerInitMap.values().forEach(commonEventHandler -> {
                 commonEventHandlerMap.put(commonEventHandler.getTableName(), commonEventHandler);
             });
         }
