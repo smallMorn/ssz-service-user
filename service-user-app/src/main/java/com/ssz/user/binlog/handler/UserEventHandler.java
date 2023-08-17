@@ -9,24 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @Slf4j
 public class UserEventHandler implements CommonEventHandler {
-
-    private final static Map<String, String> mapping = new HashMap<>();
-
-    static {
-        mapping.put("id", "id");
-        mapping.put("userName", "user_name");
-        mapping.put("userSex", "user_sex");
-        mapping.put("userAge", "user_age");
-        mapping.put("gmtCreated", "gmt_created");
-        mapping.put("gmtModified", "gmt_modified");
-        mapping.put("deleted", "deleted");
-    }
 
     @Override
     public String getTableName() {
