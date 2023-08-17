@@ -9,7 +9,7 @@ import lombok.Data;
 public class ColumnInfo {
 
     /**
-     * 第几列
+     * 存储的是数据库第几列 - 1之后的值 因为监听到的数据rows数组下标从0开始
      */
     public int position;
 
