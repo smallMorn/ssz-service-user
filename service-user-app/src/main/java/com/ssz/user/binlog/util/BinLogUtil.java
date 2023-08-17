@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BinLogUtil {
 
-    private static final String DB_TABLE = "%s-%s";
-
     private static final String DRIVER_ADDRESS = "jdbc:mysql://%s:%s/%s?serverTimezone=Asia/Shanghai";
 
     /**

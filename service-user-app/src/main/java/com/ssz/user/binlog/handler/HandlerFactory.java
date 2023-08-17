@@ -17,14 +17,14 @@ public class HandlerFactory {
     private HandlerFactory() {
     }
 
-    private static Map<String, CommonEventHandlerListener> commonEventListenerHandlerMap = new HashMap<>();
+    private static Map<String, CommonEventHandler> commonEventHandlerMap = new HashMap<>();
 
     @PostConstruct
     public void init() {
-        Map<String, CommonEventHandlerListener> commonEventListenerHandlerInitMap = applicationContext.getBeansOfType(CommonEventHandlerListener.class);
+        Map<String, CommonEventHandler> commonEventListenerHandlerInitMap = applicationContext.getBeansOfType(CommonEventHandler.class);
         if (null != commonEventListenerHandlerInitMap) {
-            commonEventListenerHandlerInitMap.values().forEach(commonEventListenerHandler -> {
-                commonEventListenerHandlerMap.put(commonEventListenerHandler.getTableName(), commonEventListenerHandler);
+            commonEventListenerHandlerInitMap.values().forEach(commonEventHandler -> {
+                commonEventHandlerMap.put(commonEventHandler.getTableName(), commonEventHandler);
             });
         }
     }
@@ -35,11 +35,11 @@ public class HandlerFactory {
      * @param table 表名称
      * @return handler
      */
-    public static CommonEventHandlerListener getInstance(String table) {
-        if (!commonEventListenerHandlerMap.containsKey(table)) {
+    public static CommonEventHandler getInstance(String table) {
+        if (!commonEventHandlerMap.containsKey(table)) {
             throw new RuntimeException("表：" + table + "没有对应的handler实现");
         }
-        return commonEventListenerHandlerMap.get(table);
+        return commonEventHandlerMap.get(table);
     }
 
 }

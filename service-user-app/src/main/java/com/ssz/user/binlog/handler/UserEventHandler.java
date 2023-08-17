@@ -4,7 +4,7 @@ import com.ssz.user.binlog.module.BinLogItem;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserEventHandlerListener implements CommonEventHandlerListener{
+public class UserEventHandler implements CommonEventHandler {
 
     @Override
     public String getTableName() {

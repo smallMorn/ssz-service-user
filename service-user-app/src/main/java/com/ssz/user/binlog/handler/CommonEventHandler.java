@@ -2,7 +2,7 @@ package com.ssz.user.binlog.handler;
 
 import com.ssz.user.binlog.module.BinLogItem;
 
-public interface CommonEventHandlerListener {
+public interface CommonEventHandler {
 
     String getTableName();
 
