@@ -2,12 +2,16 @@ package com.ssz.user.binlog.module;
 
 import com.github.shyiko.mysql.binlog.event.EventType;
 import com.google.common.collect.Maps;
+import com.ssz.user.binlog.config.BinLogDbProperty;
+import com.ssz.user.binlog.util.BinLogUtil;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.Map;
 
 @Data
+@Slf4j
 public class BinLogItem {
 
     private String schema;
@@ -27,9 +31,6 @@ public class BinLogItem {
      */
     public static BinLogItem itemFromInsertOrDeleted(Serializable[] row, Map<String, ColumnInfo> columMap, EventType eventType, long nextPosition) {
         if (null == row || null == columMap) {
-            return null;
-        }
-        if (row.length != columMap.size()) {
             return null;
         }
         // 初始化Item

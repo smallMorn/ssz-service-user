@@ -3,9 +3,11 @@ package com.ssz.user.binlog.listener;
 import com.alibaba.fastjson.JSON;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
+import com.ssz.user.binlog.config.BinLogDbProperty;
 import com.ssz.user.binlog.handler.HandlerFactory;
 import com.ssz.user.binlog.module.BinLogItem;
 import com.ssz.user.binlog.module.ColumnInfo;
+import com.ssz.user.binlog.util.BinLogUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -25,8 +27,14 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
      */
     private final Map<Long, String> tableIdMapping = new HashMap<>();
 
-    public CommonEventListener(Map<String, Map<String, ColumnInfo>> schemaTable) {
+    /**
+     * 监听的数据库信息
+     */
+    private final BinLogDbProperty binLogDbProperty;
+
+    public CommonEventListener(Map<String, Map<String, ColumnInfo>> schemaTable, BinLogDbProperty binLogDbProperty) {
         this.schemaTable = schemaTable;
+        this.binLogDbProperty = binLogDbProperty;
     }
 
     @Override
@@ -69,7 +77,8 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             String table = tableIdMapping.get(tableId);
             log.info("监听到binlog table:{} add信息：{}", table, JSON.toJSONString(event));
             for (Serializable[] row : data.getRows()) {
-                BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, schemaTable.get(table), eventType, nextPosition);
+                Map<String, ColumnInfo> latestColumnMap = this.getLatestColumnMap(schemaTable, table, row);
+                BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, latestColumnMap, eventType, nextPosition);
 
                 try {
                     log.info("处理binlog table:{} add信息：{}", table, JSON.toJSONString(item));
@@ -94,7 +103,8 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             log.info("监听到binlog table:{}, update信息：{}", table, JSON.toJSONString(event));
 
             for (Map.Entry<Serializable[], Serializable[]> row : data.getRows()) {
-                BinLogItem item = BinLogItem.itemFromUpdate(row, schemaTable.get(table), eventType, nextPosition);
+                Map<String, ColumnInfo> latestColumnMap = this.getLatestColumnMap(schemaTable, table, row.getKey());
+                BinLogItem item = BinLogItem.itemFromUpdate(row, latestColumnMap, eventType, nextPosition);
 
                 try {
                     log.info("处理binlog table:{},update信息：{}", table, JSON.toJSONString(item));
@@ -121,7 +131,8 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             log.info("监听到binlog table:{} delete信息：{}", table, JSON.toJSONString(event));
 
             for (Serializable[] row : data.getRows()) {
-                BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, schemaTable.get(table), eventType, nextPosition);
+                Map<String, ColumnInfo> latestColumnMap = this.getLatestColumnMap(schemaTable, table, row);
+                BinLogItem item = BinLogItem.itemFromInsertOrDeleted(row, latestColumnMap, eventType, nextPosition);
                 try {
                     log.info("处理binlog table:{} delete信息：{}", table, JSON.toJSONString(item));
                     HandlerFactory.getInstance(table).deleteHandle(item);
@@ -131,6 +142,22 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
 
             }
         }
+    }
+
+    /**
+     * @param schemaTable 已经监听到的表结构
+     * @param table       表名
+     * @param row         binlog日志的数据
+     * @return 返回最新的表结构
+     */
+    private Map<String, ColumnInfo> getLatestColumnMap(Map<String, Map<String, ColumnInfo>> schemaTable, String table, Serializable[] row) {
+        Map<String, ColumnInfo> columnInfoMap = schemaTable.get(table);
+        //这里不相等意味着 数据库字段发生变化（新增了字段或者删除了字段）此时要刷新表结构
+        if (row.length != columnInfoMap.size()) {
+            Map<String, ColumnInfo> colMap = BinLogUtil.getColMap(binLogDbProperty, table);
+            schemaTable.put(table, colMap);
+        }
+        return schemaTable.get(table);
     }
 
 }

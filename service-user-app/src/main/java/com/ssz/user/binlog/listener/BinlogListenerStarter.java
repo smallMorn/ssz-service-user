@@ -61,7 +61,7 @@ public class BinlogListenerStarter implements CommandLineRunner {
                                 binLogDbProperty.getUsername(),
                                 binLogDbProperty.getPassword());
                         binaryLogClient.setServerId(serverId);
-                        binaryLogClient.registerEventListener(new CommonEventListener(schemaTable));
+                        binaryLogClient.registerEventListener(new CommonEventListener(schemaTable, binLogDbProperty));
                         log.info("成功 注册监听信息，注册DB：{}，注册表： {}", binLogDbProperty.getSchema(), tableList);
                         binaryLogClient.connect();
 
