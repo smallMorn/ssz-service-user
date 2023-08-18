@@ -153,6 +153,7 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
     private Map<String, ColumnInfo> getLatestColumnMap(Map<String, Map<String, ColumnInfo>> schemaTable, String table, Serializable[] row) {
         Map<String, ColumnInfo> columnInfoMap = schemaTable.get(table);
         //这里不相等意味着 数据库字段发生变化（新增了字段或者删除了字段）此时要刷新表结构
+        //TODO mysql-binlog-connector-java有大问题 没有DDL事件 这里虽然解决了字段新增、删除，却没有解决字段移动位置的问题
         if (row.length != columnInfoMap.size()) {
             Map<String, ColumnInfo> colMap = BinLogUtil.getColMap(binLogDbProperty, table);
             schemaTable.put(table, colMap);
