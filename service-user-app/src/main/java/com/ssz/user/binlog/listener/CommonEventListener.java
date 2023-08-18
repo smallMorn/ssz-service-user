@@ -9,8 +9,8 @@ import com.ssz.user.binlog.module.ColumnInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class CommonEventListener implements BinaryLogClient.EventListener {
@@ -23,7 +23,7 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
     /**
      * 这个监听这个库tableId和table关系
      */
-    private final Map<Long, String> tableIdMapping = new ConcurrentHashMap();
+    private final Map<Long, String> tableIdMapping = new HashMap<>();
 
     public CommonEventListener(Map<String, Map<String, ColumnInfo>> schemaTable) {
         this.schemaTable = schemaTable;
@@ -51,8 +51,8 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
     /**
      * 业务处理模板方法
      *
-     * @param event
-     * @param eventType
+     * @param event     事件
+     * @param eventType 事件类型
      */
     private void handle(Event event, EventType eventType) {
         if (EventType.isWrite(eventType)) {
@@ -63,6 +63,7 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             WriteRowsEventData data = event.getData();
             long tableId = data.getTableId();
             if (!tableIdMapping.containsKey(tableId)) {
+                log.warn("tableId:{}没有对应的table,tableIdMapping:{}", tableId, JSON.toJSONString(tableIdMapping));
                 return;
             }
             String table = tableIdMapping.get(tableId);
@@ -86,6 +87,7 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             EventHeaderV4 header = event.getHeader();
             long nextPosition = header.getNextPosition();
             if (!tableIdMapping.containsKey(tableId)) {
+                log.warn("tableId:{}没有对应的table,tableIdMapping:{}", tableId, JSON.toJSONString(tableIdMapping));
                 return;
             }
             String table = tableIdMapping.get(tableId);
@@ -112,6 +114,7 @@ public class CommonEventListener implements BinaryLogClient.EventListener {
             long nextPosition = header.getNextPosition();
 
             if (!tableIdMapping.containsKey(tableId)) {
+                log.warn("tableId:{}没有对应的table,tableIdMapping:{}", tableId, JSON.toJSONString(tableIdMapping));
                 return;
             }
             String table = tableIdMapping.get(tableId);
